@@ -1,0 +1,9 @@
+dist/tmp
+node_modules
+*.depth
+*.DS_Store
+*.gz
+*.jp*g
+*.png
+*.pyc
+*Icon*
