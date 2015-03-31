@@ -216,7 +216,7 @@ demo.util.testDependencies = function testDependencies(log)
   }
 
   // Chrome and Firefox expose the Pointer Lock API on mobile, even though
-  // they don't it support there.
+  // they don't support it there.
   else if (/Android|iPhone|iPad|iPod|webOS/i.test(navigator.userAgent)) 
   {
     logError('The Pointer Lock API is unavailable.');
