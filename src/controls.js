@@ -38,6 +38,13 @@ demo.initControls = function initControl(canvas, deltaZ)
     };
   }
 
+  function isPointerLockOn()
+  {
+    return (document.pointerLockElement === canvas    ||
+            document.mozPointerLockElement === canvas ||
+            document.webkitPointerLockElement === canvas);
+  }
+
   function lockRotation()
   {
     rotationLocked = true;
@@ -137,9 +144,7 @@ demo.initControls = function initControl(canvas, deltaZ)
 
   function plChangeCallback()
   {
-    if (document.pointerLockElement === canvas    ||
-        document.mozPointerLockElement === canvas ||
-        document.webkitPointerLockElement === canvas)
+    if (isPointerLockOn())
     {
       canvas.addEventListener('mousemove', onMouse);
       document.body.addEventListener('keydown', onKeyDown);
@@ -162,7 +167,14 @@ demo.initControls = function initControl(canvas, deltaZ)
 
   function plErrorCallback()
   {
-    throw new Error('Pointer Lock error');
+    console.log('error fired');
+
+    throw new Error([
+      'Pointer Lock error',
+      'pointer lock on: ' + isPointerLockOn(),
+      'moving: ' + moving,
+      'rotationLocked: ' + rotationLocked
+      ].join('\n'));
   }
 
   function set(position, rotation)

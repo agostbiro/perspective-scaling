@@ -28040,6 +28040,13 @@ demo.initControls = function initControl(canvas, deltaZ)
     };
   }
 
+  function isPointerLockOn()
+  {
+    return (document.pointerLockElement === canvas    ||
+            document.mozPointerLockElement === canvas ||
+            document.webkitPointerLockElement === canvas);
+  }
+
   function lockRotation()
   {
     rotationLocked = true;
@@ -28139,9 +28146,7 @@ demo.initControls = function initControl(canvas, deltaZ)
 
   function plChangeCallback()
   {
-    if (document.pointerLockElement === canvas    ||
-        document.mozPointerLockElement === canvas ||
-        document.webkitPointerLockElement === canvas)
+    if (isPointerLockOn())
     {
       canvas.addEventListener('mousemove', onMouse);
       document.body.addEventListener('keydown', onKeyDown);
@@ -28164,7 +28169,14 @@ demo.initControls = function initControl(canvas, deltaZ)
 
   function plErrorCallback()
   {
-    throw new Error('Pointer Lock error');
+    console.log('error fired');
+
+    throw new Error([
+      'Pointer Lock error',
+      'pointer lock on: ' + isPointerLockOn(),
+      'moving: ' + moving,
+      'rotationLocked: ' + rotationLocked
+      ].join('\n'));
   }
 
   function set(position, rotation)
@@ -28998,7 +29010,7 @@ demo.initPanoHandler = function initPanoHandler(firstPano, imgData)
       var percentage;
 
       nLoaded += 1;
-      percentage = Math.round(nLoaded / totalToLoad * 100);
+      percentage = Math.round(totalToLoad ? nLoaded / totalToLoad * 100 : 1);
 
       panoHandler.dispatchEvent({
         pano: this,
@@ -29891,7 +29903,7 @@ demo.util.testDependencies = function testDependencies(log)
   }
 
   // Chrome and Firefox expose the Pointer Lock API on mobile, even though
-  // they don't support there.
+  // they don't support it there.
   else if (/Android|iPhone|iPad|iPod|webOS/i.test(navigator.userAgent)) 
   {
     logError('The Pointer Lock API is unavailable.');
@@ -29920,8 +29932,8 @@ demo.util.testDependencies = function testDependencies(log)
     try 
     {
       demo.glUtil.createFramebuffer(
-        gl, 
-        512, 
+        gl,
+        512,
         {
           type: gl.FLOAT,
           format: gl.RGBA,
