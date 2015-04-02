@@ -29010,7 +29010,7 @@ demo.initPanoHandler = function initPanoHandler(firstPano, imgData)
       var percentage;
 
       nLoaded += 1;
-      percentage = Math.round(totalToLoad ? nLoaded / totalToLoad * 100 : 1);
+      percentage = Math.round(totalToLoad ? nLoaded / totalToLoad * 100 : 100);
 
       panoHandler.dispatchEvent({
         pano: this,
@@ -29932,8 +29932,8 @@ demo.util.testDependencies = function testDependencies(log)
     try 
     {
       demo.glUtil.createFramebuffer(
-        gl,
-        512,
+        gl, 
+        512, 
         {
           type: gl.FLOAT,
           format: gl.RGBA,

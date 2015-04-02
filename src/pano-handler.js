@@ -71,7 +71,7 @@ demo.initPanoHandler = function initPanoHandler(firstPano, imgData)
       var percentage;
 
       nLoaded += 1;
-      percentage = Math.round(totalToLoad ? nLoaded / totalToLoad * 100 : 1);
+      percentage = Math.round(totalToLoad ? nLoaded / totalToLoad * 100 : 100);
 
       panoHandler.dispatchEvent({
         pano: this,
