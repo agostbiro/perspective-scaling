@@ -27,7 +27,7 @@ vec2
   texCo;
 
 vec3
-  p, q, r, s;
+  p, q, r;
 
 // From: Ericson, Christer. Real-time Collision Detection. 
 //       Amsterdam: Elsevier, 2005. p. 47.
@@ -77,10 +77,8 @@ void main(void)
 
   r = texture2D(uOriginalDM, vec2(pTexCo.x, pTexCo.y + vYDistTexCo)).xyz;
   r = vec3(r.xy / (r.z - uCumDeltaZ), r.z - uCumDeltaZ);
-
-  s = vec3(vSamplePoint, 1.0);
   
-  getBarycentricCoords(p.xy, q.xy, r.xy, s.xy, alpha, beta, gamma);
+  getBarycentricCoords(p.xy, q.xy, r.xy, vSamplePoint, alpha, beta, gamma);
 
   // See p. 58. of the OpenGL Es 2.0.25 spec for the formula.
   z = (alpha + beta + gamma) / (alpha / p.z + beta / q.z + gamma / r.z);
