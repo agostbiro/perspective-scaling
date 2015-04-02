@@ -7,9 +7,6 @@ demo.initPerspectiveScaling = function initPerspectiveScaling(gl,
                                                               psData)
 {
   var
-    multiTargetFbExt = gl.getExtension('WEBGL_draw_buffers'),
-    floatTextureExt = gl.getExtension('OES_texture_float'),
-
     initEvent = {type: 'initialized'},
     renderEvent = {type: 'render'},
 
