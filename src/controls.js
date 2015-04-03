@@ -167,8 +167,6 @@ demo.initControls = function initControl(canvas, deltaZ)
 
   function plErrorCallback()
   {
-    console.log('error fired');
-
     throw new Error([
       'Pointer Lock error',
       'pointer lock on: ' + isPointerLockOn(),
