@@ -1,6 +1,6 @@
 /*
   A Three.js 'Object3D' representing a cube where each inner face displays a 
-  tile of a cubic panorama. The textures of the faces are rendertargets and can
+  tile of a cubic panorama. The textures of the faces are render targets and can
   be rendered to at will.
   'tiles' is a dictionary of images representing the faces of the cube.
   Keys are: north, west, south, east, top, bottom. North is the yaw rotation 
