@@ -18,8 +18,10 @@ demo.initPerspectiveScaling = function initPerspectiveScaling(gl,
     imageTexture,
     perspectiveScaling,
     programs,
-    psAttributes,
-    psUniforms,
+    tiAttributes,
+    tiUniforms,
+    udmAttributes,
+    udmUniforms,
     zTexture;
 
 
@@ -217,19 +219,12 @@ demo.initPerspectiveScaling = function initPerspectiveScaling(gl,
     },
   };
 
-  psAttributes = {
+  tiAttributes = {
     aPos: {
       value: new Float32Array(psData.PSvertices),
       itemSize: 4,
       target: gl.ARRAY_BUFFER,
       type: gl.FLOAT,
-      usage: gl.STATIC_DRAW
-    },
-    aQuadrant: {
-      value: new Uint8Array(psData.PSmask),
-      itemSize: 2,
-      target: gl.ARRAY_BUFFER,
-      type: gl.UNSIGNED_BYTE,
       usage: gl.STATIC_DRAW
     },
     aTexCoord: {
@@ -248,7 +243,16 @@ demo.initPerspectiveScaling = function initPerspectiveScaling(gl,
     }
   };
 
-  psUniforms = {
+  udmAttributes = _.clone(tiAttributes);
+  udmAttributes.aQuadrant = {
+    value: new Uint8Array(psData.PSmask),
+    itemSize: 2,
+    target: gl.ARRAY_BUFFER,
+    type: gl.UNSIGNED_BYTE,
+    usage: gl.STATIC_DRAW
+  };
+
+  tiUniforms = {
     uImage: {
       value: 0,
       setter: 'uniform1i'
@@ -257,19 +261,21 @@ demo.initPerspectiveScaling = function initPerspectiveScaling(gl,
       value: 1,
       setter: 'uniform1i'
     },
-      uOriginalDM: {
-      value: 2,
-      setter: 'uniform1i'
-    },
 
     uCumDeltaZ: {
       value: 0,
       setter: 'uniform1f'
     },
-    uDistTexCo: {
-      value: 1 / imgData.size,
-      setter: 'uniform1f'
-    }
+  };
+
+  udmUniforms = _.clone(tiUniforms);
+  udmUniforms.uOriginalDM = {
+    value: 2,
+    setter: 'uniform1i'
+  };
+  udmUniforms.uDistTexCo = {
+    value: 1 / imgData.size,
+    setter: 'uniform1f'
   };
 
   zTexture = demo.glUtil.createTexture(
@@ -305,16 +311,16 @@ demo.initPerspectiveScaling = function initPerspectiveScaling(gl,
     gl,
     demo.shaders.updateDM.vertex,
     demo.shaders.updateDM.fragment,
-    psAttributes,
-    psUniforms
+    udmAttributes,
+    udmUniforms
   );
 
   programs.transformImage = demo.glUtil.createProgram(
     gl,
-    demo.shaders.updateDM.vertex,
+    demo.shaders.transformImage.vertex,
     demo.shaders.transformImage.fragment,
-    psAttributes,
-    psUniforms
+    tiAttributes,
+    tiUniforms
   );
 
 

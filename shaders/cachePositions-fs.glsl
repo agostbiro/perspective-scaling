@@ -14,5 +14,5 @@ void main(void)
   z = clamp(vec4(texture2D(uDepthMap, vTexCo).z), 0.0, 16.0);
 
   // Store original positions at sample points.
-  gl_FragColor = vec4(vPos * z.z, z.z, 0.0);
+  gl_FragColor = vec4(vPos * z.z, z.z, z.z);
 }
