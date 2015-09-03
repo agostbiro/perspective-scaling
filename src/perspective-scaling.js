@@ -1,3 +1,6 @@
+// This is an implementation of the perspective scaling procedure
+// https://www.agostbiro.com/ps/paper.html#section-3.8.
+
 // Events: render, initialized
 
 // Can not share resources across canvases, therefore the application must share
